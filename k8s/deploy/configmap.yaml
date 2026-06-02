@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: insta-config
+data:
+  DATABASE_HOST: mysql-service
+  CACHE_SIZE: "512"
