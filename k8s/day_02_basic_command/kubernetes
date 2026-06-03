@@ -1,0 +1,12 @@
+minikube start --driver=virtualbox or --driver=docker
+minikube status
+
+kubectl get nodes          || or create or delete
+kubectl get deployment     || or create or delete
+kubectl get pod            || or create or delete*
+kubectl get service        || or create or delete
+
+
+
+// from .yml file
+kubectl apply -f <file-name>.yaml
