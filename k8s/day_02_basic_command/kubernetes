@@ -10,3 +10,26 @@ kubectl get service        || or create or delete
 
 // from .yml file
 kubectl apply -f <file-name>.yaml
+
+// get command
+kubectl get pods
+kubectl get deployments
+kubectl get services
+
+// describe
+kubectl describe pod <name>
+kubectl describe deployment <name>
+
+// logs
+kubectl logs <pod-name>
+kubectl logs <pod-name> -c <container-name>
+
+// exec
+kubectl exec -it <pod-name> -- /bin/bash
+
+// apply for .yaml files
+kubectl apply -f deployment.yaml
+
+// delete
+kubectl delete pod <pod-name>
+kubectl delete deployment <deployment-name>
