@@ -29,7 +29,13 @@ kubectl exec -it <pod-name> -- /bin/bash
 
 // apply for .yaml files
 kubectl apply -f deployment.yaml
+kubectl delete -f deployment.yaml
 
 // delete
 kubectl delete pod <pod-name>
 kubectl delete deployment <deployment-name>
+
+
+// kubectx is used to change namespace : a namespace is a virtual cluster inside the 
+// k8s cluster 
+$ kuben namespace
