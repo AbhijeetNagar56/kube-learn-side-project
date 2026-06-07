@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: devtrack-backend:latest
+        ports:
+        - containerPort: 4321
+        env:
+        - name: DB
+          value: mysql://root:abc123@database:3306/appdb
+        - name: FRONTEND_URL
+          value: http://frontend-service:8080
+        livenessProbe:
+          httpGet:
+            path: /api/health
+            port: 4321
+          initialDelaySeconds: 10
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /api/health
+            port: 4321
+          initialDelaySeconds: 5
+          periodSeconds: 15
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+spec:
+  selector:
+    app: backend
+  ports:
+  - port: 4321
+    targetPort: 4321
+  type: ClusterIP
