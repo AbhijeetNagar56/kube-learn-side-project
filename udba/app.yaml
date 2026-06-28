@@ -1,0 +1,66 @@
+# app.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app
+  namespace: university-app
+  labels:
+    app: university-app
+spec:
+  containers:
+    - name: app
+      image: ghcr.io/abhijeetnagar56/university-dba:latest
+      imagePullPolicy: Always
+      ports:
+        - containerPort: 3000
+      env:
+        - name: PORT
+          value: "3000"
+        - name: SESSION_SECRET
+          value: "your-secret"
+        - name: ADMIN_USER
+          value: "admin"
+        - name: ADMIN_PASS
+          value: "admin123"
+        - name: DB_HOST
+          value: "mysql-svc"          # K8s DNS — resolves inside the cluster
+        - name: DB_PORT
+          value: "3306"
+        - name: DB_NAME
+          value: "university"
+        - name: DB_USER
+          value: "root"
+        - name: DB_PASSWORD_FILE       # ← your db.js reads this
+          value: "/secrets/db_pass"
+      volumeMounts:
+        - name: db-secret-vol
+          mountPath: /secrets      # file lands at /run/secrets/mysql-root-password
+          readOnly: true
+      resources:
+        requests:
+          cpu: "250m"
+          memory: "128Mi"
+        limits:
+          cpu: "500m"
+          memory: "256Mi"
+  volumes:
+    - name: db-secret-vol
+      secret:
+        secretName: db-secret
+        items:
+          - key: mysql-root-password
+            path: db_pass              # final path: /run/secrets/db_pass
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-svc
+  namespace: university-app
+spec:
+  selector:
+    app: university-app
+  type: NodePort
+  ports:
+    - port: 3000
+      targetPort: 3000
+      nodePort: 30080
