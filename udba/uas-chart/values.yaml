@@ -1,0 +1,18 @@
+# Database Secret Configs
+secret:
+  mysqlRootPassword: ""
+
+# Application Env Configs
+app:
+  image: "ghcr.io/abhijeetnagar56/university-accomodation-system:latest"
+  imagePullPolicy: "Always"
+  sessionSecret: ""
+  adminUser: ""
+  adminPass: ""
+  serviceType: "NodePort"
+  nodePort: 30080
+
+# Database Storage Configs
+db:
+  image: "mysql:8"
+  storageSize: "5Gi"

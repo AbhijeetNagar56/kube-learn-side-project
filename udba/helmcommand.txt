@@ -1,0 +1,9 @@
+helm template uas-release ./uas-chart
+
+helm install uas-release ./uas-chart \
+  -n university-accomodation-system \
+  --create-namespace
+
+helm upgrade uas-release ./uas-chart \
+  -n university-accomodation-system \
+  --set app.adminPass="NewSecurePass789"
