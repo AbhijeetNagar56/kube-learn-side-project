@@ -20,6 +20,13 @@ spec:
         env:
         - name: MYSQL_ROOT_PASSWORD
           value: abc123
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "256Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
         volumeMounts:
         - name: mysql-data
           mountPath: /var/lib/mysql

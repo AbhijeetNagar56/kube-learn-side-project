@@ -14,9 +14,16 @@ spec:
     spec:
       containers:
       - name: backend
-        image: devtrack-backend:latest
+        image: backend-image-name:tag
         ports:
         - containerPort: 4321
+        resources:
+          limits:
+            cpu: "500m"
+            memory: "256Mi"
+          requests:
+            cpu: "250m"
+            memory: "128Mi"
         env:
         - name: DB
           value: mysql://root:abc123@database:3306/appdb
